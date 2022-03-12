@@ -1,7 +1,14 @@
 const inquirer = require('inquirer');
-const {viewEmployees } = require('./routes/employeeRoutes');
-const {viewRole } = require('./routes/roleRoutes');
+//=====================================================================
+// Connection to each function in the routes folders for switch case
+//=====================================================================
+const {viewEmployees, addEmployee} = require('./routes/employeeRoutes');
+const {viewRole, updateRole, addRole} = require('./routes/roleRoutes');
+const {viewDepartment, addDepartment} = require('./routes/departmentRoutes');
 
+//=============================================================
+//                          Prompt
+//=============================================================
 const promptInput = () => {
    return inquirer.prompt([
     {
@@ -13,30 +20,56 @@ const promptInput = () => {
    ]
 
     )
+//======================================================================================================
+//  switch case to run different functions from modular routes based on each choice in the list above             
+//======================================================================================================
     .then(answer => {
         switch (answer.questions) {
+//===============================================================
+//            function to view all employees in current database == DONE==
+//===============================================================
             case "View All Employees":
                 viewEmployees();
-
                 break;
+//===============================================================
+//            function to add employee to database
+//===============================================================
             case "Add Employee":
                 addEmployee(); 
                 break;
+//===============================================================
+//              function to change role of an employee
+//===============================================================
             case "Update Employee Role":
-                viewRole(); 
+                updateRole(); 
                 break;
+//===============================================================
+//  function to view all roles available in the current database == DONE ==
+//===============================================================
             case "View All Roles":
-                 //add function here 
+                 viewRole();
                 break;
+//===============================================================
+//               function to add another role
+//===============================================================
             case "Add Role":
-                //add function here 
+                addRole(); 
                 break;
+//===============================================================
+//    function to view all departments in the current database  == DONE ==
+//===============================================================
             case "View All Departments":
-                //add function here 
+                viewDepartment();
                 break;
+//===============================================================
+//          function to add a department to the database
+//===============================================================
             case "Add Department":
-                //add function here 
+                addDepartment(); 
                 break;
+//===============================================================
+//         process.exit escapes from node in the terminal
+//===============================================================
             case "Leave":
                 console.log('Goodbye')
                 process.exit();
@@ -46,18 +79,5 @@ const promptInput = () => {
         promptInput();
     })
 };
-
-
-// const viewEmployees = () => {
-//     const sql = `SELECT employee.first_name AS First_Name, employee.last_name AS Last_name FROM employee`;
-//     db.query(sql, (err, res) => {
-//         if (err) {
-//           console.log(err);
-//           return;
-//         };
-//     });
-//     promptInput();
-// };
-    
 
 promptInput();
