@@ -3,11 +3,11 @@ const inquirer = require('inquirer');
 
 
 //=============================================================
-//                 Function to view Departments
+//                 Function to view Departments               == DONE ==
 //=============================================================
 
 const viewDepartment = () => {
-    const sql = `SELECT department.name AS Department FROM department`;
+    const sql = `SELECT department.name AS Department, department.id AS Department_ID FROM department`;
     db.query(sql, (err, res) => {
         if (err) {
           console.log(err);
@@ -17,7 +17,7 @@ const viewDepartment = () => {
 };
 
 //=============================================================
-//                 Function to add Departments
+//                 Function to add Departments                == DONE ==
 //=============================================================
 
 const addDepartment = () => {

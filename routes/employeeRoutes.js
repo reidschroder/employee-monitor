@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 
 
 //=============================================================
-//              Function to view all employees
+//              Function to view all employees                == DONE ==
 //=============================================================
 const viewEmployees = () => {
     const sql = `SELECT employee.first_name AS First_Name, employee.last_name AS Last_name, employee.roles_id, roles.job_title AS Title FROM employee LEFT JOIN roles ON employee.roles_id = roles.id`;
@@ -14,6 +14,23 @@ const viewEmployees = () => {
         }; console.table(res);
     });
 };
+
+//=============================================================
+//       Function to create role array for addin employee
+//=============================================================
+let roleArray = [];
+const selectRole = () => {
+    const sql = `SELECT * FROM roles`;
+    db.query(sql, (err, res) => {
+        if (err) {
+          console.log(err);
+          return;
+        }; for (var i = 0; i < res.length; i++) {
+            roleArray.push(res[i].job_title);
+        }
+    })
+    return roleArray;
+}
 
 
 //=============================================================
@@ -33,16 +50,17 @@ const addEmployee = () => {
         },
         {
             type: "list",
-            name: "role",
+            name: "addRole",
             Message: "What is this employee's role?",
-            choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
+           // choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
+           choices: selectRole,
         },
 
     ]) 
     
     .then (employeeData => {
         const sql = `INSERT INTO employee (first_name, last_name, roles_id)
-        VALUES('${employeeData.firstName}', '${employeeData.lastName}', '${employeeData.role})`
+        VALUES('${employeeData.firstName}', '${employeeData.lastName}', '${employeeData.addRole})`
         db.query(sql, (err, res) => {
             if (err) {
                 console.log (err);
@@ -50,7 +68,7 @@ const addEmployee = () => {
             }; console.log(res);
         })
     })
-    
+    viewEmployees();
 }
 
 module.exports = {viewEmployees, addEmployee};

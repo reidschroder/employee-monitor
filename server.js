@@ -68,7 +68,7 @@ const promptInput = () => {
                 addDepartment(); 
                 break;
 //===============================================================
-//         process.exit escapes from node in the terminal
+//         process.exit escapes from node in the terminal       == DONE ==
 //===============================================================
             case "Leave":
                 console.log('Goodbye')
