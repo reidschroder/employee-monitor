@@ -62,7 +62,7 @@ const promptInput = () => {
                 viewDepartment();
                 break;
 //===============================================================
-//          function to add a department to the database
+//          function to add a department to the database        == DONE ==
 //===============================================================
             case "Add Department":
                 addDepartment(); 

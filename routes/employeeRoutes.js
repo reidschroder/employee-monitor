@@ -1,5 +1,7 @@
 const db = require('../db/connection');
 const inquirer = require('inquirer');
+
+
 //=============================================================
 //              Function to view all employees
 //=============================================================
@@ -12,6 +14,8 @@ const viewEmployees = () => {
         }; console.table(res);
     });
 };
+
+
 //=============================================================
 //             Function to add employee to database
 //=============================================================
@@ -26,10 +30,19 @@ const addEmployee = () => {
             type: "input",
             name: "lastName",
             message: "What is this employee's last name?"
-        }
-    ]) .then (employeeData => {
-        const sql = `INSERT INTO employee (first_name, last_name)
-        VALUES(${employeeData.firstName}, ${employeeData.lastName})`
+        },
+        {
+            type: "list",
+            name: "role",
+            Message: "What is this employee's role?",
+            choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
+        },
+
+    ]) 
+    
+    .then (employeeData => {
+        const sql = `INSERT INTO employee (first_name, last_name, roles_id)
+        VALUES('${employeeData.firstName}', '${employeeData.lastName}', '${employeeData.role})`
         db.query(sql, (err, res) => {
             if (err) {
                 console.log (err);
