@@ -77,9 +77,6 @@ const promptInput = () => {
             process.exit();
         }
       })
-      .then((data) => {
-        promptInput();
-      })
   );
 };
 
