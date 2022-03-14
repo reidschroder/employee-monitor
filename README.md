@@ -9,8 +9,8 @@ Once the inquirer prompt is called upon, the user will be faced with options to 
 * JavaScript
 * SQL
 
-## Test Video
-[Test](https://drive.google.com/file/d/1D8a_V839T2feEOjd_zF7WQpFuTfarZal/view)
+## Demonstration Video
+[Demo](https://drive.google.com/file/d/1D8a_V839T2feEOjd_zF7WQpFuTfarZal/view)
 
 
 ## Contribution
