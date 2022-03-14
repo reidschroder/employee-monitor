@@ -22,7 +22,10 @@ const viewRole = () => {
 function addRole() {
   const deptSql = `SELECT * FROM department`;
   db.query(deptSql, (err, res) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      return;
+    }
 
     let deptNames = [];
 
