@@ -15,18 +15,61 @@ const viewRole = () => {
     });
 };
 
-
-//=============================================================
-//       Function to Update an existing employee's role
-//=============================================================
-const updateRole = () => {
-
-}
-
 //=============================================================
 //      Function to add a new role to the array of roles
 //=============================================================
-const addRole = () => {
+function addRole(){
+  const deptSql = `SELECT * FROM department`;
+  db.query(deptSql, (err, res) => {
+      if (err) throw err;
 
-}
-module.exports = {viewRole, updateRole, addRole};
+      let deptNames = [];
+
+      res.forEach((department) => {deptNames.push(department.name)});
+
+      inquirer.prompt([
+          {
+              name: 'departmentName',
+              type: 'list',
+              message: 'What department does this new role belong to?',
+              choices: deptNames
+          }
+      ]).then((answer) => {
+          addRoleContinue(answer);
+      });
+
+      const addRoleContinue = (departmentData) => {
+          inquirer.prompt([
+              {
+                  name: 'newRole',
+                  type: 'input',
+                  message: 'What is the title of the new role?'
+              },
+              {
+                  name: 'salary',
+                  type: 'input',
+                  message: 'How much salary does this new role earn?'
+              }
+          ]).then((answer) => {
+              let newRole = answer.newRole;
+              let departmentId;
+
+              res.forEach((department) => {
+                  if (departmentData.departmentName === department.name){
+                      departmentId = department.id
+                  }
+              });
+
+              let sql = `INSERT INTO roles (job_title, salary, department_id) VALUES (?,?,?)`;
+              let params = [newRole, answer.salary, departmentId];
+
+              db.query(sql, params, (err) => {
+                  if (err) throw err;
+
+                  viewRole();
+              });
+          });
+      }
+  });
+};
+module.exports = {viewRole, addRole};
